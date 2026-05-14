@@ -1,3 +1,0 @@
-[submodule "concurrent"]
-	path = concurrent
-	url = git@github.com:romancitodev/concurrent.git
