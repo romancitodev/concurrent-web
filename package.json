@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "comp:add": "shadcn@latest add"
+    "comp:add": "bunx --bun shadcn@latest add"
   },
   "dependencies": {
     "@dagrejs/dagre": "^3.0.0",
