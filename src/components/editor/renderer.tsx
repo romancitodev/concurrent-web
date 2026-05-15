@@ -1,4 +1,4 @@
-import { renderGraph } from "@/lib/concurrent";
+import { graphData, layoutGraph } from "@/lib/concurrent";
 import { useEditorStore } from "@/store/editor";
 import {
   Background,
@@ -7,45 +7,38 @@ import {
   ReactFlow,
 } from "@xyflow/react";
 import { useMemo } from "react";
-import { Node } from "@/components/editor/node";
+import { CoreNode } from "@/components/editor/node";
+
+const nodeTypes = { concurrent: CoreNode };
 
 export function Renderer() {
   const ir = useEditorStore((state) => state.ir);
 
-  const svgNode = useMemo(() => {
+  const { nodes, edges } = useMemo(() => {
     try {
-      return renderGraph(ir, "graph");
+      const data = graphData(ir, "graph");
+      return layoutGraph(data);
     } catch {
-      return "";
+      return { nodes: [], edges: [] };
     }
   }, [ir]);
 
-  console.log(svgNode);
-
-  function sanitizeSvg(svgString: string) {
-    return svgString
-      .replaceAll(/(\<path[^>]*stroke="[^"]*")/g, '$1 stroke-dasharray="5,5"')
-      .replaceAll(/(\<path[^>]*stroke=")(#[0-9a-fA-F]{8})/g, "$1#e3e3e3");
-  }
-
-  const nodes = [
-    {
-      id: "1",
-      type: "svg",
-      data: { svg: sanitizeSvg(svgNode) },
-      position: { x: 0, y: 0 },
-    },
-  ];
-  const nodeTypes = { svg: Node };
-
   return (
-    <div className="w-full h-full bg-zinc-50">
-      <ReactFlow nodeTypes={nodeTypes} nodes={nodes} colorMode="dark" fitView>
+    <div className="h-full w-full bg-zinc-50">
+      <ReactFlow
+        nodeTypes={nodeTypes}
+        nodes={nodes}
+        edges={edges}
+        colorMode="dark"
+        fitView
+        nodesDraggable
+        proOptions={{ hideAttribution: true }}
+      >
         <Background
           variant={BackgroundVariant.Dots}
           patternClassName="fill-white/30"
         />
-        <Controls showInteractive={false} />
+        <Controls showInteractive={true} />
       </ReactFlow>
     </div>
   );
