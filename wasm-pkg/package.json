@@ -1,0 +1,15 @@
+{
+  "name": "concurrent",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "concurrent_bg.wasm",
+    "concurrent.js",
+    "concurrent.d.ts"
+  ],
+  "main": "concurrent.js",
+  "types": "concurrent.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
