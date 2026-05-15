@@ -8,9 +8,10 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "comp:add": "shadcn@latest add"
+    "comp:add": "bunx --bun shadcn@latest add"
   },
   "dependencies": {
+    "@dagrejs/dagre": "^3.0.0",
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@monaco-editor/react": "^4.7.0",
     "@remixicon/react": "^4.9.0",
